@@ -142,19 +142,25 @@ body {
     width: 100%;
     height: 100%;
     background: rgba(0, 0, 0, 0.8);
-    display: none;
+    display: flex;
     justify-content: center;
     align-items: center;
+    transition: opacity 0.3s ease-in-out;
+    overflow-y: auto;
+    padding: 20px;
 }
 
 .modal-contenido {
     background: #222;
     padding: 20px;
     border-radius: 10px;
-    width: 80%;
-    max-width: 800px;
+    width: 40%;
+    max-width: 600px;
     position: relative;
     color: #fff;
+    max-height: 90vh;
+    overflow-y: auto;
+    align-items: center;
 }
 
 .cerrar {
@@ -181,6 +187,7 @@ body {
 
 .especificaciones-lista li {
     margin: 5px 0;
+    word-wrap: break-word;
 }
 
 /* Estilos adicionales para el filtro secundario */
