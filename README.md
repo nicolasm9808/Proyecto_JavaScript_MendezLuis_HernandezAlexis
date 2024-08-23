@@ -1,4 +1,4 @@
-# Star Wars Search
+# Star Wars Search 🌌
 
 ## Descripción
 
@@ -12,10 +12,10 @@ Esta aplicación permite buscar y visualizar datos sobre personajes, planetas, n
 
 ## Tecnologías
 
-- HTML
-- CSS
-- JavaScript
-- Bootstrap
+- **HTML**: Estructura de la página web.
+- **CSS**: Estilos y diseño responsivo.
+- **JavaScript**: Funcionamiento de la Página Web.
+- **Bootstrap**: Framework CSS para diseño responsivo y componentes preconstruidos.
 
 ## Funcionalidades
 
@@ -24,6 +24,27 @@ Esta aplicación permite buscar y visualizar datos sobre personajes, planetas, n
 - Imágenes temáticas de Star Wars.
 - Diseño responsive y estilizado con temática de Star Wars.
 
-## Uso
+> [!IMPORTANT]
+> ## Uso
 
 Escribe en el campo de búsqueda, selecciona el tipo de dato, y visualiza los resultados en tarjetas con imágenes temáticas.
+
+> [!TIP]
+> ## Contribución 👥
+
+¡Nos encantaría recibir tus contribuciones! Si deseas contribuir a este proyecto, por favor sigue estos pasos:
+
+- Haz un fork del proyecto.
+- Crea una nueva rama `(git checkout -b feature/nueva-funcionalidad)`.
+- Realiza tus cambios y haz commit `(git commit -am 'Añadir nueva funcionalidad')`.
+- Empuja la rama `(git push origin feature/nueva-funcionalidad)`.
+- Abre un Pull Request.
+
+> [!NOTE]
+> ## Contacto 🧑‍💻
+
+Hecho por [Alexis Hernández](https://github.com/AlexisH28)
+Hecho por [Luis Nicolás Méndez](https://github.com/nicolasm9808)
+
+Alexis Rafael Hernández Tocora -- (alexismar1228@gmail.com)
+Luis Nicolás Méndez Palacios -- ()
