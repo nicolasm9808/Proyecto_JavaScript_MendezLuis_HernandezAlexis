@@ -1,290 +1,182 @@
-* {
+@font-face {
+    font-family: "Rubik";
+    src: url(/fonts/Rubik-Bold.ttf);
+}
+
+@font-face {
+    font-family: "Port";
+    src: url(/fonts/PortLligatSans-Regular.ttf);
+}
+
+/* Estilo general */
+body {
+    font-family: 'Port';
+    background-color: #000;
+    color: #fff;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
+    background-image: url('/images/d84724f41ba98c5b61a82a6071b11da3.gif');
+    background-size: cover;
+    background-position: center 10%;
+    background-repeat: no-repeat;
 }
-
-body {
-    font-family: Arial, sans-serif;
-    background-color: #1a1a1a;
-    color: #fff;
-}
-
 .contenedor {
-    width: 90%;
+    max-width: 1200px;
     margin: 0 auto;
-    text-align: center;
+    padding: 20px;
 }
 
 .titulo {
-    font-size: 3rem;
-    margin: 2rem 0;
-    color: #feda4a;
-    font-family: 'Star Jedi', sans-serif;
+    text-align: center;
+    font-family: 'Rubik';
+    font-size: 2.5em;
+    color: #FFD700;
 }
 
 .botones-filtro {
     display: flex;
-    justify-content: center;
-    gap: 1rem;
     flex-wrap: wrap;
-    margin-bottom: 2rem;
-}
-
-.btn-filtro {
-    background-color: #000;
-    border: 2px solid #feda4a;
-    color: #feda4a;
-    font-size: 1.2rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
     justify-content: center;
-    transition: background-color 0.3s, color 0.3s;
-    flex: 1 1 auto;
-}
-
-.btn-filtro img {
-    width: 50px;
-    height: 50px;
-    margin-bottom: 0.5rem;
-}
-
-.btn-filtro:hover {
-    background-color: #feda4a;
-    color: #000;
-}
-
-.contenedor-resultados {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-    gap: 1.5rem;
-}
-
-.card {
-    background-color: #333;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    width: 100%;
-    max-width: 200px;
-    min-height: 300px;
-}
-
-.imagen-contenedor {
-    width: 100%;
-    height: 200px;
-    background-color: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-}
-
-.imagen-contenedor img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.imagen-contenedor img[src*="Sin+Imagen"] {
-    display: block;
-    width: 100%;
-    height: 100%;
-    background-color: #e0e0e0;
-    text-align: center;
-    line-height: 200px;
-    color: #333;
-    font-size: 16px;
-}
-
-.card-body {
-    padding: 1rem;
-}
-
-.card-title {
-    font-size: 1.5rem;
-    color: #feda4a;
-}
-
-/* Modal */
-.modal {
-    display: none;
-    position: fixed;
-    z-index: 1000;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto;
-    background-color: rgba(0, 0, 0, 0.6);
-}
-
-.modal-contenido {
-    background-color: #333;
-    margin: 5% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 8px;
-    position: relative;
-    box-sizing: border-box;
-}
-
-.cerrar {
-    color: #feda4a;
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    font-size: 1.5rem;
-    font-weight: bold;
-    cursor: pointer;
-    transition: color 0.3s;
-}
-
-.cerrar:hover {
-    color: #fff;
-}
-
-.modal-titulo {
-    font-size: 1.5rem;
     margin-bottom: 20px;
 }
 
-.modal-imagen {
-    width: 100%;
-    height: auto;
-    max-height: 300px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    overflow: hidden;
-    margin-bottom: 1rem;
-    object-fit: cover;
-    border-radius: 8px;
-}
-
-.modal-detalles {
-    font-size: 1rem;
+.btn-filtro {
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
     color: #fff;
-    margin-top: 20px;
-}
-
-.especificaciones-lista {
-    list-style: none;
-    padding: 0;
-    margin: 0;
-}
-
-.especificaciones-lista li {
-    margin-bottom: 10px;
-    font-size: 14px;
-}
-
-.especificaciones-lista li strong {
-    font-weight: bold;
-}
-
-/* Paginación */
-.paginacion {
-    display: flex;
-    justify-content: center;
-    gap: 1rem;
-    margin-top: 2rem;
-}
-
-.btn-paginacion {
-    background-color: #000;
-    border: 2px solid #feda4a;
-    color: #feda4a;
-    font-size: 1rem;
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    transition: background-color 0.3s, color 0.3s;
-}
-
-.btn-paginacion:hover {
-    background-color: #feda4a;
-    color: #000;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    .card {
-        max-width: 100%;
-        min-height: 250px;
-    }
-
-    .modal-contenido {
-        width: 95%;
-        margin: 5% auto;
-    }
-
-    .modal-titulo {
-        font-size: 1.2rem;
-    }
-
-    .modal-detalles {
-        font-size: 0.9rem;
-    }
-
-    .especificaciones-lista li {
-        font-size: 14px;
-    }
-
-    .btn-filtro {
-        font-size: 1rem;
-        padding: 0.5rem;
-    }
-
-    .btn-filtro img {
-        width: 40px;
-        height: 40px;
-    }
-}
-
-
-.btn-filtro-secundario {
-    background-color: #000;
-    border: 2px solid #feda4a;
-    color: #feda4a;
-    font-size: 1rem;
-    padding: 0.5rem 0.5rem;
+    font-size: 1.2em;
+    margin: 5px;
+    padding: 10px 20px;
     cursor: pointer;
     display: flex;
-    flex-direction: column;
     align-items: center;
-    justify-content: center;
-    margin: 2px;
-    transition: background-color 0.3s, color 0.3s;
 }
 
-.btn-filtro-secundario:hover {
-    background-color: #feda4a;
-    color: #000;
+.btn-filtro img {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
 }
 
-/* Estilos para la barra de búsqueda */
 .barra-busqueda {
+    text-align: center;
     margin-bottom: 20px;
 }
 
 .barra-busqueda input {
     width: 100%;
+    max-width: 400px;
     padding: 10px;
-    font-size: 16px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
+    font-size: 1em;
+    border: 2px solid #333;
+    border-radius: 5px;
+    background-color: #222;
+    color: #fff;
 }
 
-.barra-busqueda input:focus {
-    outline: none;
-    border-color: #feda4a;
+.contenedor-resultados {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    background-color: #444;
+    border: 1px solid #555;
+    border-radius: 10px;
+    margin: 10px;
+    width: 300px;
+    overflow: hidden;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.card:hover {
+    transform: scale(1.05);
+}
+
+.imagen-contenedor {
+    overflow: hidden;
+}
+
+.card img {
+    width: 100%;
+    height: auto;
+}
+
+.paginacion {
+    text-align: center;
+    margin: 20px 0;
+}
+
+.btn-paginacion {
+    background-color: #333;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
+}
+
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: none;
+    justify-content: center;
+    align-items: center;
+}
+
+.modal-contenido {
+    background: #222;
+    padding: 20px;
+    border-radius: 10px;
+    width: 80%;
+    max-width: 800px;
+    position: relative;
+    color: #fff;
+}
+
+.cerrar {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.modal-imagen img {
+    width: 100%;
+    height: auto;
+}
+
+.modal-detalles {
+    margin-top: 10px;
+}
+
+.especificaciones-lista {
+    list-style: none;
+    padding: 0;
+}
+
+.especificaciones-lista li {
+    margin: 5px 0;
+}
+
+/* Estilos adicionales para el filtro secundario */
+.btn-filtro-secundario {
+    background-color: #555;
+    border: none;
+    border-radius: 5px;
+    color: #fff;
+    font-size: 1em;
+    margin: 5px;
+    padding: 10px 20px;
+    cursor: pointer;
 }

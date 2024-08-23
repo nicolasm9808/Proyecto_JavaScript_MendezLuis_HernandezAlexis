@@ -17,15 +17,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const obtenerDatos = async (categoria, pagina = 1) => {
         try {
             const url = `${apiUrl}${categoria}/?page=${pagina}`;
-            console.log(`Haciendo solicitud a: ${url}`);
             const respuesta = await fetch(url);
             if (!respuesta.ok) throw new Error(`HTTP error! status: ${respuesta.status}`);
-            const datos = await respuesta.json();
-            console.log(`Datos obtenidos de ${categoria}:`, datos);
-            return datos;
+            return await respuesta.json();
         } catch (error) {
-            console.error('Error al obtener los datos:', error);
-            alert(`Error al obtener los datos: ${error.message}`);
+            mostrarErrorModal(`Error al obtener los datos: ${error.message}`);
             return null;
         }
     };
@@ -45,23 +41,17 @@ document.addEventListener('DOMContentLoaded', () => {
         return datosCompletos;
     };
 
-    // Función para obtener la URL de la imagen desde Star Wars Visual Guide
+    // Función para obtener la URL de la imagen
     const obtenerUrlImagen = (categoria, id) => {
         const baseUrl = 'https://starwars-visualguide.com/assets/img/';
-        switch (categoria) {
-            case 'people':
-                return `${baseUrl}characters/${id}.jpg`;
-            case 'planets':
-                return `${baseUrl}planets/${id}.jpg`;
-            case 'starships':
-                return `${baseUrl}starships/${id}.jpg`;
-            case 'vehicles':
-                return `${baseUrl}vehicles/${id}.jpg`;
-            case 'species':
-                return `${baseUrl}species/${id}.jpg`;
-            default:
-                return 'https://via.placeholder.com/300?text=Sin+Imagen';
-        }
+        const categorias = {
+            'people': 'characters',
+            'planets': 'planets',
+            'starships': 'starships',
+            'vehicles': 'vehicles',
+            'species': 'species'
+        };
+        return `${baseUrl}${categorias[categoria] || 'characters'}/${id}.jpg`;
     };
 
     // Función para mostrar resultados
@@ -71,9 +61,8 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        datosActuales = datos; // Almacenar datos actuales
-
-        resultadosContenedor.innerHTML = datos.map((item) => {
+        datosActuales = datos;
+        resultadosContenedor.innerHTML = datos.map(item => {
             const id = item.url.split('/').filter(Boolean).pop();
             const nombre = item.name || item.title;
             const imagenUrl = obtenerUrlImagen(categoria, id);
@@ -106,12 +95,9 @@ document.addEventListener('DOMContentLoaded', () => {
     // Función para mostrar filtros secundarios
     const mostrarFiltrosSecundarios = (categoria) => {
         filtrosSecundariosContenedor.innerHTML = '';
-
         const datos = datosCompletos[categoria];
 
-        if (!datos || datos.length === 0) {
-            return;
-        }
+        if (!datos || datos.length === 0) return;
 
         const filtros = {};
         datos.forEach(item => {
@@ -132,7 +118,7 @@ document.addEventListener('DOMContentLoaded', () => {
             filtrosSecundariosContenedor.appendChild(botonFiltro);
         }
 
-        document.querySelectorAll('.btn-filtro-secundario').forEach((boton) => {
+        document.querySelectorAll('.btn-filtro-secundario').forEach(boton => {
             boton.addEventListener('click', () => {
                 const categoria = boton.getAttribute('data-categoria');
                 const filtro = boton.getAttribute('data-filtro');
@@ -141,111 +127,82 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
+    // Función para manejar el filtro secundario
     const manejarFiltroSecundario = (categoria, filtro) => {
-        categoriaActual = categoria;
-        const resultadosFiltrados = datosCompletos[categoria].filter(item => {
-            if (categoria === 'people' && item.gender === filtro) return true;
-            if (categoria === 'planets' && item.climate === filtro) return true;
+        const datosFiltrados = datosCompletos[categoria].filter(item => {
+            if (categoria === 'people') return item.gender === filtro;
+            if (categoria === 'planets') return item.climate === filtro;
             return false;
         });
-        mostrarResultados(resultadosFiltrados, categoria);
+        mostrarResultados(datosFiltrados, categoria);
     };
 
-    // Función para mostrar detalles en el modal
-    const mostrarDetallesModal = (id, categoria) => {
-        console.log(`Obteniendo detalles para ${categoria} con ID ${id}`);
+    // Función para mostrar el modal
+    const mostrarModal = (id, categoria) => {
         const item = datosActuales.find(item => item.url.includes(id));
-    
-        if (!item) {
-            modalTitulo.textContent = 'Información no disponible';
-            modalImagen.innerHTML = '<p>Imagen no disponible</p>';
-            modalDetalles.innerHTML = '<p>Detalles no disponibles.</p>';
-            modal.style.display = 'block';
-            return;
-        }
-    
-        const nombre = item.name || item.title;
-        const imagenUrl = obtenerUrlImagen(categoria, id);
-    
-        modalTitulo.textContent = nombre;
-        modalImagen.innerHTML = `<img src="${imagenUrl}" alt="${nombre}" onError="this.src='https://via.placeholder.com/300?text=Imagen+No+Disponible';">`;
-    
-        // Generar lista de especificaciones
-        const especificaciones = Object.entries(item).map(([clave, valor]) => `
-            <li><strong>${clave.charAt(0).toUpperCase() + clave.slice(1)}:</strong> ${valor}</li>
-        `).join('');
-        
-        modalDetalles.innerHTML = `
-            <ul id="modal-especificaciones" class="especificaciones-lista">
-                ${especificaciones}
-            </ul>
-        `;
-    
+        if (!item) return;
+
+        modalTitulo.textContent = item.name || item.title;
+        modalImagen.innerHTML = `<img src="${obtenerUrlImagen(categoria, id)}" alt="${item.name || item.title}">`;
+
+        const especificaciones = Object.entries(item).map(([clave, valor]) => {
+            return `<li><strong>${clave}:</strong> ${valor}</li>`;
+        }).join('');
+        modalDetalles.innerHTML = especificaciones;
+
         modal.style.display = 'block';
     };
 
-    // Función para manejar el cierre del modal
-    const cerrarModalFn = () => {
+    // Función para mostrar mensaje de error en el modal
+    const mostrarErrorModal = (mensaje) => {
+        modalTitulo.textContent = 'Error';
+        modalImagen.innerHTML = '';
+        modalDetalles.innerHTML = `<p>${mensaje}</p>`;
+        modal.style.display = 'block';
+    };
+
+    // Evento para cerrar el modal
+    cerrarModal.addEventListener('click', () => {
         modal.style.display = 'none';
-    };
+    });
 
-    const siguientePagina = async () => {
-        if (categoriaActual) {
-            paginaActual += 1;
-            const datos = await obtenerDatos(categoriaActual, paginaActual);
-            if (datos) {
-                mostrarResultados(datos, categoriaActual);
-            }
+    // Evento para manejar clic en los resultados
+    resultadosContenedor.addEventListener('click', (event) => {
+        const card = event.target.closest('.card');
+        if (card) {
+            const id = card.getAttribute('data-id');
+            const categoria = card.getAttribute('data-categoria');
+            mostrarModal(id, categoria);
         }
-    };
+    });
 
-    const paginaAnterior = async () => {
-        if (categoriaActual) {
-            paginaActual -= 1;
-            const datos = await obtenerDatos(categoriaActual, paginaActual);
-            if (datos) {
-                mostrarResultados(datos, categoriaActual);
-            }
-        }
-    };
-
-    // Event listeners
-    document.querySelectorAll('.btn-filtro').forEach((boton) => {
+    // Evento para manejar los filtros de categoría
+    document.querySelectorAll('.btn-filtro').forEach(boton => {
         boton.addEventListener('click', () => {
             const categoria = boton.getAttribute('data-categoria');
             manejarFiltro(categoria);
         });
     });
 
-    document.getElementById('boton-anterior').addEventListener('click', paginaAnterior);
-    document.getElementById('boton-siguiente').addEventListener('click', siguientePagina);
-
-    resultadosContenedor.addEventListener('click', (event) => {
-        const card = event.target.closest('.card');
-        if (card) {
-            const id = card.getAttribute('data-id');
-            const categoria = card.getAttribute('data-categoria');
-            mostrarDetallesModal(id, categoria);
-        }
+    // Evento para manejar la barra de búsqueda
+    barraBusqueda.addEventListener('input', () => {
+        const busqueda = barraBusqueda.value.toLowerCase();
+        const resultadosFiltrados = datosActuales.filter(item => 
+            (item.name || item.title).toLowerCase().includes(busqueda)
+        );
+        mostrarResultados(resultadosFiltrados, categoriaActual);
     });
 
-    cerrarModal.addEventListener('click', cerrarModalFn);
+    // Eventos de paginación
+    document.getElementById('boton-anterior').addEventListener('click', async () => {
+        paginaActual--;
+        const datos = await obtenerDatos(categoriaActual, paginaActual);
+        mostrarResultados(datos, categoriaActual);
+    });
 
-    // Manejar el evento de búsqueda
-    barraBusqueda.addEventListener('input', () => {
-        const textoBusqueda = barraBusqueda.value.trim().toLowerCase();
-        if (textoBusqueda === '') {
-            // Si el campo de búsqueda está vacío, mostrar todos los resultados
-            if (categoriaActual) {
-                mostrarResultados(datosCompletos[categoriaActual], categoriaActual);
-            }
-        } else {
-            // Filtrar los resultados según el texto de búsqueda
-            const resultadosFiltrados = datosActuales.filter(item => {
-                const nombre = item.name || item.title;
-                return nombre.toLowerCase().includes(textoBusqueda);
-            });
-            mostrarResultados(resultadosFiltrados, categoriaActual);
-        }
+    document.getElementById('boton-siguiente').addEventListener('click', async () => {
+        paginaActual++;
+        const datos = await obtenerDatos(categoriaActual, paginaActual);
+        mostrarResultados(datos, categoriaActual);
     });
 });
