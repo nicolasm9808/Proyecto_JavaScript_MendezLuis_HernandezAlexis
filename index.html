@@ -1,27 +1,72 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Star Wars Search</title>
+    <title>Buscador de Star Wars</title>
     <link rel="stylesheet" href="styles.css">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
+
 <body>
-    <header class="text-center my-4">
-        <h1>Star Wars Search</h1>
-        <input type="text" id="searchInput" class="form-control" placeholder="Search for characters, planets, starships...">
-        <div class="my-3">
-            <select id="searchType" class="form-select">
-                <option value="people">People</option>
-                <option value="planets">Planets</option>
-                <option value="starships">Starships</option>
-                <option value="vehicles">Vehicles</option>
-                <option value="species">Species</option>
-            </select>
+    <div class="contenedor">
+        <h1 class="titulo">Buscador de Star Wars</h1>
+
+        <div class="botones-filtro">
+            <button class="btn-filtro" data-categoria="people">
+                <img src="images/characters-icon.png" alt="Personajes">
+                <span>Personajes</span>
+            </button>
+            <button class="btn-filtro" data-categoria="planets">
+                <img src="images/planets-icon.png" alt="Planetas">
+                <span>Planetas</span>
+            </button>
+            <button class="btn-filtro" data-categoria="starships">
+                <img src="images/starships-icon.png" alt="Naves">
+                <span>Naves</span>
+            </button>
+            <button class="btn-filtro" data-categoria="vehicles">
+                <img src="images/vehicles-icon.png" alt="Vehículos">
+                <span>Vehículos</span>
+            </button>
+            <button class="btn-filtro" data-categoria="species">
+                <img src="images/species-icon.png" alt="Especies">
+                <span>Especies</span>
+            </button>
         </div>
-    </header>
-    <main id="results" class="container"></main>
+
+        <!-- Filtros específicos -->
+        <div id="filtros-secundarios" class="botones-filtro"></div>
+        
+        <!-- Barra de Búsqueda -->
+        <div class="barra-busqueda">
+            <input type="text" id="barra-busqueda" placeholder="Buscar...">
+        </div>
+        
+        <!-- Resultados -->
+        <div id="resultados" class="contenedor-resultados"></div>
+
+        <!-- Navegación de Páginas -->
+        <div id="paginacion" class="paginacion">
+            <!-- Botones de navegación por páginas -->
+            <button id="boton-anterior" class="btn-paginacion" style="display: none;">Página Anterior</button>
+            <button id="boton-siguiente" class="btn-paginacion" style="display: none;">Siguiente Página</button>
+        </div>
+    </div>
+
+    <!-- Modal -->
+    <div id="modal" class="modal">
+        <div class="modal-contenido">
+            <span id="cerrar-modal" class="cerrar">&times;</span>
+            <h2 id="modal-titulo"></h2>
+            <div id="modal-imagen" class="modal-imagen"></div>
+            <div id="modal-detalles" class="modal-detalles">
+                <ul id="modal-especificaciones" class="especificaciones-lista"></ul>
+            </div>
+        </div>
+    </div>
+
     <script src="main.js"></script>
 </body>
+
 </html>
