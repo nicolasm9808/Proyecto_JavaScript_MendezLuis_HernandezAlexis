@@ -17,9 +17,11 @@ body {
     padding: 0;
     background-image: url('/images/d84724f41ba98c5b61a82a6071b11da3.gif');
     background-size: cover;
-    background-position: center 10%;
+    background-position: center;
     background-repeat: no-repeat;
+    background-attachment: fixed; /* Mantener el GIF estático */
 }
+
 .contenedor {
     max-width: 1200px;
     margin: 0 auto;
@@ -51,12 +53,18 @@ body {
     cursor: pointer;
     display: flex;
     align-items: center;
+    transition: background-color 0.3s, transform 0.3s;
 }
 
 .btn-filtro img {
-    width: 24px;
-    height: 24px;
+    width: 32px; /* Aumentar tamaño del icono */
+    height: 32px;
     margin-right: 10px;
+}
+
+.btn-filtro:hover {
+    background-color: #555;
+    transform: scale(1.05);
 }
 
 .barra-busqueda {
@@ -119,6 +127,12 @@ body {
     margin: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-paginacion:hover {
+    background-color: #555;
+    transform: scale(1.05);
 }
 
 .modal {
@@ -179,4 +193,92 @@ body {
     margin: 5px;
     padding: 10px 20px;
     cursor: pointer;
+    transition: background-color 0.3s, transform 0.3s;
+}
+
+.btn-filtro-secundario:hover {
+    background-color: #666;
+    transform: scale(1.05);
+}
+
+/* Media Queries */
+
+/* Para dispositivos móviles (hasta 768px) */
+@media (max-width: 768px) {
+    .titulo {
+        font-size: 2em;
+    }
+
+    .btn-filtro {
+        font-size: 1em;
+        padding: 8px 16px;
+    }
+
+    .btn-filtro img {
+        width: 28px;
+        height: 28px;
+    }
+
+    .barra-busqueda input {
+        font-size: 0.9em;
+    }
+
+    .card {
+        width: 100%;
+        max-width: 400px;
+    }
+
+    .contenedor {
+        padding: 10px;
+    }
+}
+
+/* Para tablets y pantallas pequeñas de escritorio (769px a 1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+    .titulo {
+        font-size: 2.2em;
+    }
+
+    .btn-filtro {
+        font-size: 1.1em;
+        padding: 9px 18px;
+    }
+
+    .btn-filtro img {
+        width: 30px;
+        height: 30px;
+    }
+
+    .barra-busqueda input {
+        font-size: 1em;
+    }
+
+    .card {
+        width: 280px;
+    }
+}
+
+/* Para pantallas grandes de escritorio (1025px en adelante) */
+@media (min-width: 1025px) {
+    .titulo {
+        font-size: 2.5em;
+    }
+
+    .btn-filtro {
+        font-size: 1.2em;
+        padding: 10px 20px;
+    }
+
+    .btn-filtro img {
+        width: 32px;
+        height: 32px;
+    }
+
+    .barra-busqueda input {
+        font-size: 1em;
+    }
+
+    .card {
+        width: 300px;
+    }
 }
