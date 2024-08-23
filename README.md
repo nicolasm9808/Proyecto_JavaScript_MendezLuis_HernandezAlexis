@@ -47,4 +47,4 @@ Hecho por [Alexis Hernández](https://github.com/AlexisH28)
 Hecho por [Luis Nicolás Méndez](https://github.com/nicolasm9808)
 
 Alexis Rafael Hernández Tocora -- (alexismar1228@gmail.com)
-Luis Nicolás Méndez Palacios -- ()
+Luis Nicolás Méndez Palacios -- (nicolas-mendez@hotmail.com)
